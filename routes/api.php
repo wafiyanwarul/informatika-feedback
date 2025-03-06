@@ -40,4 +40,10 @@ Route::post('dosens/multi-insert', [DosenController::class, 'multiInsert']); // 
 
 // MATA KULIAH CRUD ROUTES
 Route::apiResource('mata-kuliahs', MataKuliahController::class);
+Route::get('mata-kuliahs/search/{nama_mk}', [MataKuliahController::class, 'searchByName']);
 Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiInsert']);
+// GET	        /api/mata-kuliahs	    index()                 READ semua data
+// POST	        /api/mata-kuliahs 	    store()                 CREATE data baru
+// GET	        /api/mata-kuliahs/{id}	show($id)	            READ berdasarkan ID
+// PUT/PATCH	/api/mata-kuliahs/{id}	update($request, $id)	UPDATE berdasarkan ID
+// DELETE	    /api/mata-kuliahs/{id}	destroy($id)	        DELETE berdasarkan ID
