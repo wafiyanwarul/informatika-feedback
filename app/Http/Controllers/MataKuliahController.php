@@ -88,6 +88,26 @@ class MataKuliahController extends Controller
         ], Response::HTTP_OK);
     }
 
+    // get mata kuliah by name
+    public function searchByName($nama_mk)
+    {
+        $mataKuliahs = MataKuliah::with('dosen')
+            ->where('nama_mk', 'like', "%$nama_mk%")
+            ->get();
+
+        if ($mataKuliahs->isEmpty()) {
+            return response()->json([
+                'message' => 'Mata kuliah tidak ditemukan'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            'message' => 'Berhasil mengambil data mata kuliah',
+            'data' => $mataKuliahs
+        ], Response::HTTP_OK);
+    }
+
+
     /**
      * Hapus mata kuliah berdasarkan ID.
      */
