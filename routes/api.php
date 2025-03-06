@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\KategoriSurveyController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\MataKuliahController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,3 +37,7 @@ Route::post('dosens/multi-insert', [DosenController::class, 'multiInsert']); // 
 // GET	        /api/dosens/{id}	show($id)	            READ berdasarkan ID
 // PUT/PATCH	/api/dosens/{id}	update($request, $id)	UPDATE berdasarkan ID
 // DELETE	    /api/dosens/{id}	destroy($id)	        DELETE berdasarkan ID
+
+// MATA KULIAH CRUD ROUTES
+Route::apiResource('mata-kuliahs', MataKuliahController::class);
+Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiInsert']);
