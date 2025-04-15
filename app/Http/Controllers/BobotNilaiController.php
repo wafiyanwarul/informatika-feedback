@@ -15,6 +15,7 @@ class BobotNilaiController extends Controller
     {
         $bobotNilais = BobotNilai::all();
         return response()->json([
+            'status' => 'success',
             'message' => 'Berhasil mengambil data bobot nilai',
             'data' => $bobotNilais
         ], Response::HTTP_OK);
