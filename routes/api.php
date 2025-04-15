@@ -5,14 +5,16 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\KategoriSurveyController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\MataKuliahController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 // ROLES CRUD ROUTES
-Route::apiResource('roles', RoleController::class);
 Route::get('roles/search/{nama}', [RoleController::class, 'search']); // search by name
+Route::apiResource('roles', RoleController::class);
 // GET	        /api/roles	    index()	                Mengambil semua data role
 // POST	        /api/roles	    store()	                Menambah data role baru
 // GET	        /api/roles/{id}	show($id)	            Mengambil data role berdasarkan ID
@@ -27,3 +29,21 @@ Route::apiResource('kategori-surveys', KategoriSurveyController::class);
 // PUT/PATCH	/api/kategori-surveys/{id}	update($request, $id)	UPDATE berdasarkan ID
 // DELETE	    /api/kategori-surveys/{id}	destroy($id)	        DELETE berdasarkan ID
 
+// DOSEN CRUD ROUTES
+Route::apiResource('dosens', DosenController::class);
+Route::post('dosens/multi-insert', [DosenController::class, 'multiInsert']); // multi-insert data
+// GET	        /api/dosens	        index()                 READ semua data
+// POST	        /api/dosens 	    store()                 CREATE data baru
+// GET	        /api/dosens/{id}	show($id)	            READ berdasarkan ID
+// PUT/PATCH	/api/dosens/{id}	update($request, $id)	UPDATE berdasarkan ID
+// DELETE	    /api/dosens/{id}	destroy($id)	        DELETE berdasarkan ID
+
+// MATA KULIAH CRUD ROUTES
+Route::apiResource('mata-kuliahs', MataKuliahController::class);
+Route::get('mata-kuliahs/search/{nama_mk}', [MataKuliahController::class, 'searchByName']);
+Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiInsert']);
+// GET	        /api/mata-kuliahs	    index()                 READ semua data
+// POST	        /api/mata-kuliahs 	    store()                 CREATE data baru
+// GET	        /api/mata-kuliahs/{id}	show($id)	            READ berdasarkan ID
+// PUT/PATCH	/api/mata-kuliahs/{id}	update($request, $id)	UPDATE berdasarkan ID
+// DELETE	    /api/mata-kuliahs/{id}	destroy($id)	        DELETE berdasarkan ID

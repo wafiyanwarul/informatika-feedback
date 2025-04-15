@@ -21,18 +21,19 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('survey_results', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('survey_id')->constrained('surveys');
-            $table->foreignId('user_id')->constrained('users');
-            $table->float('total_nilai');
+        Schema::create('final_scores', function (Blueprint $table) {
+            $table->id('id_final_scores');
+            $table->foreignId('dosen_id')->constrained('dosens')->onDelete('cascade');
+            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade');
+            $table->float('final_score');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('survey_results');
+        // remove table ('survey_results') (incorrect db schema)
+        Schema::dropIfExists('final_scores');
         Schema::dropIfExists('responses');
     }
 };
