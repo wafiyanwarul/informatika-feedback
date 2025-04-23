@@ -8,6 +8,7 @@ use App\Http\Controllers\KategoriSurveyController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\BobotNilaiController;
+use App\Http\Controllers\SurveyController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -58,3 +59,4 @@ Route::apiResource('bobot-nilais', BobotNilaiController::class);
 // PUT/PATCH   /api/bobot-nilais/{id}      -> update()
 // DELETE      /api/bobot-nilais/{id}      -> destroy()
 
+Route::apiResource('surveys', SurveyController::class);
