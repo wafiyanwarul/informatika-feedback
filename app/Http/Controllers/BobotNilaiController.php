@@ -31,12 +31,10 @@ class BobotNilaiController extends Controller
             'skor' => 'required|integer|between:1,5',
         ]);
 
-        $bobotNilai = BobotNilai::create([
-            'deskripsi' => $request->deskripsi,
-            'skor' => $request->skor,
-        ]);
+        $bobotNilai = BobotNilai::create($request->only(['deskripsi', 'skor']));
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Bobot nilai berhasil ditambahkan',
             'data' => $bobotNilai
         ], Response::HTTP_CREATED);
@@ -50,11 +48,13 @@ class BobotNilaiController extends Controller
         $bobotNilai = BobotNilai::find($id);
         if (!$bobotNilai) {
             return response()->json([
+                'status' => 'error',
                 'message' => 'Bobot nilai tidak ditemukan'
             ], Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Berhasil mengambil data bobot nilai',
             'data' => $bobotNilai
         ], Response::HTTP_OK);
@@ -68,6 +68,7 @@ class BobotNilaiController extends Controller
         $bobotNilai = BobotNilai::find($id);
         if (!$bobotNilai) {
             return response()->json([
+                'status' => 'error',
                 'message' => 'Bobot nilai tidak ditemukan'
             ], Response::HTTP_NOT_FOUND);
         }
@@ -77,12 +78,10 @@ class BobotNilaiController extends Controller
             'skor' => 'required|integer|between:1,5',
         ]);
 
-        $bobotNilai->update([
-            'deskripsi' => $request->deskripsi,
-            'skor' => $request->skor,
-        ]);
+        $bobotNilai->update($request->only(['deskripsi', 'skor']));
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Bobot nilai berhasil diperbarui',
             'data' => $bobotNilai
         ], Response::HTTP_OK);
@@ -96,12 +95,15 @@ class BobotNilaiController extends Controller
         $bobotNilai = BobotNilai::find($id);
         if (!$bobotNilai) {
             return response()->json([
+                'status' => 'error',
                 'message' => 'Bobot nilai tidak ditemukan'
             ], Response::HTTP_NOT_FOUND);
         }
 
         $bobotNilai->delete();
+
         return response()->json([
+            'status' => 'success',
             'message' => 'Bobot nilai berhasil dihapus'
         ], Response::HTTP_OK);
     }
