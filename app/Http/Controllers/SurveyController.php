@@ -9,6 +9,17 @@ use Illuminate\Http\Response;
 
 class SurveyController extends Controller
 {
+    // GET: /api/surveys
+    public function index()
+    {
+        $surveys = Survey::with('kategori')->get();
+        return response()->json([
+            'status_code' => Response::HTTP_OK,
+            'message' => 'Berhasil mendapatkan seluruh data Survey',
+            'data' => $surveys
+        ], Response::HTTP_OK);
+    }
+
     // POST: /api/surveys
     public function store(Request $request)
     {
