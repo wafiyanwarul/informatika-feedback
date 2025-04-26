@@ -9,10 +9,14 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\BobotNilaiController;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\UserController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// USER CRUD (AUTH-USER)
+Route::post('/users', [UserController::class, 'store']);
+
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 // ROLES CRUD ROUTES
 Route::get('roles/search/{nama}', [RoleController::class, 'search']); // search by name
