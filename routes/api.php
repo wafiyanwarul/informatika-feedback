@@ -14,6 +14,13 @@ use App\Http\Controllers\UserController;
 // USER CRUD (AUTH-USER)
 Route::post('/users', [UserController::class, 'store']);
 
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']); // Read all users
+    Route::get('/{id}', [UserController::class, 'show']); // Read one user
+    Route::put('/{id}', [UserController::class, 'update']); // Update user name
+    Route::delete('/{id}', [UserController::class, 'destroy']); // Delete user
+});
+
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
