@@ -10,6 +10,7 @@ use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\BobotNilaiController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SurveyQuestionController;
 
 // USER CRUD (AUTH-USER)
 Route::post('/users', [UserController::class, 'store']);
@@ -71,3 +72,11 @@ Route::apiResource('bobot-nilais', BobotNilaiController::class);
 // DELETE      /api/bobot-nilais/{id}      -> destroy()
 
 Route::apiResource('surveys', SurveyController::class);
+
+// SURVEY_QUESTIONS CRUD ROUTES
+Route::get('/survey-questions/{survey_id}', [SurveyQuestionController::class, 'index']);
+Route::post('/survey-questions', [SurveyQuestionController::class, 'store']);
+Route::put('/survey-questions/{id}', [SurveyQuestionController::class, 'update']);
+Route::delete('/survey-questions/{id}', [SurveyQuestionController::class, 'destroy']);
+
+
