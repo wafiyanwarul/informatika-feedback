@@ -78,5 +78,3 @@ Route::get('/survey-questions/{survey_id}', [SurveyQuestionController::class, 'i
 Route::post('/survey-questions', [SurveyQuestionController::class, 'store']);
 Route::put('/survey-questions/{id}', [SurveyQuestionController::class, 'update']);
 Route::delete('/survey-questions/{id}', [SurveyQuestionController::class, 'destroy']);
-
-
