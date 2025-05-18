@@ -14,9 +14,20 @@ class SurveyQuestion extends Model
         'pertanyaan',
         'tipe',
     ];
-    
+
+    /**
+     * Relasi: Pertanyaan ini milik sebuah survey.
+     */
     public function survey()
     {
         return $this->belongsTo(Survey::class);
+    }
+
+    /**
+     * Relasi: Pertanyaan ini memiliki banyak response (jawaban user).
+     */
+    public function responses()
+    {
+        return $this->hasMany(Response::class, 'question_id');
     }
 }
