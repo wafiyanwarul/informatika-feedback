@@ -39,7 +39,7 @@ class PenilaianDosenController extends Controller
         ]);
 
         try {
-            // Ambil semua response dari mahasiswa tersebut untuk survey dan yang tipe pertanyaannya 'rating'
+            // retrieve all response from mahasiswa for survey and question with 'rating' type
             $responses = Response::where('user_id', $request->mahasiswa_id)
                 ->where('survey_id', $request->survey_id)
                 ->whereHas('question', function ($query) {
