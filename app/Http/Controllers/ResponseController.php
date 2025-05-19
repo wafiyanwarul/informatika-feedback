@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Response;
 use App\Models\SurveyQuestion;
@@ -126,7 +127,14 @@ class ResponseController extends Controller
             ], 422);
         }
 
-        $question = SurveyQuestion::find($response->question_id);
+        try {
+            $question = SurveyQuestion::findOrFail($response->question_id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Survey question not found.'
+            ], 404);
+        }
 
         if ($question->tipe === 'rating') {
             if (is_null($request->nilai)) {
