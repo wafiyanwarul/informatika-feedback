@@ -114,10 +114,13 @@ class MataKuliahDosenController extends Controller
 
             MataKuliahDosen::insert($data);
 
+            $insertedIds = collect($data)->pluck('mata_kuliah_id')->toArray();
+            $insertedRecords = MataKuliahDosen::whereIn('mata_kuliah_id', $insertedIds)->with(['mataKuliah', 'dosen'])->get();
+
             return response()->json([
                 'status' => 201,
                 'message' => 'Mata Kuliah Dosen berhasil ditambahkan secara massal.',
-                'data' => $data
+                'data' => $insertedRecords
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
