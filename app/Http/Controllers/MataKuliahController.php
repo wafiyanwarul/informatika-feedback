@@ -11,7 +11,7 @@ class MataKuliahController extends Controller
     public function index()
     {
         try {
-            $data = MataKuliah::all();
+            $data = MataKuliah::with('dosens')->get();
 
             return response()->json([
                 'status' => 200,
