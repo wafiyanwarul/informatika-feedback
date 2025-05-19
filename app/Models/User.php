@@ -23,6 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
+        'foto_profil',
+        'email_verified_at'
     ];
 
     /**
