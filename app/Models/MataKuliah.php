@@ -10,14 +10,14 @@ class MataKuliah extends Model
     use HasFactory;
 
     protected $table = 'mata_kuliahs';
-
-    protected $fillable = ['nama_mk', 'dosen_id'];
+    
+    protected $fillable = ['nama_mk', 'sks'];
 
     /**
-     * Relasi ke model Dosen
+     * Relasi ke model MataKuliahDosen
      */
-    public function dosen()
+    public function dosens()
     {
-        return $this->belongsTo(Dosen::class, 'dosen_id');
+        return $this->belongsToMany(Dosen::class, 'mata_kuliah_dosens', 'mata_kuliah_id', 'dosen_id');
     }
 }

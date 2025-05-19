@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\KategoriSurveyController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\MataKuliahDosenController;
 use App\Http\Controllers\BobotNilaiController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
@@ -64,9 +65,14 @@ Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiIns
 // PUT/PATCH	/api/mata-kuliahs/{id}	update($request, $id)	UPDATE berdasarkan ID
 // DELETE	    /api/mata-kuliahs/{id}	destroy($id)	        DELETE berdasarkan ID
 
+
+// API ROUTE MATA KULIAH DOSEN
+Route::apiResource('mata-kuliah-dosens', MataKuliahDosenController::class);
+Route::post('mata-kuliah-dosens/multi-insert', [MataKuliahDosenController::class, 'multiInsert']);
+
+
 // BOBOT NILAI CRUD ROUTES
 Route::apiResource('bobot-nilais', BobotNilaiController::class);
-
 // GET         /api/bobot-nilais           -> index()
 // POST        /api/bobot-nilais           -> store()
 // GET         /api/bobot-nilais/{id}      -> show()
