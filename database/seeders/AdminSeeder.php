@@ -26,7 +26,7 @@ class AdminSeeder extends Seeder
             ['email' => 'wafiyanwarulhikam12@gmail.com'],
             [
                 'name' => 'admin',
-                'password' => Hash::make('adminif123'),
+                'password' => Hash::make(value: env('ADMIN_PASSWORD', 'default_secure_password')),
                 'role_id' => $adminRole->id,
             ]
         );

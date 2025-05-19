@@ -39,7 +39,7 @@ class RoleResource extends Resource
         return $table->columns([
             TextColumn::make('id')->sortable(),
             TextColumn::make('nama_role')->label('Nama Role')->searchable(),
-            TextColumn::make('created_at')->label('Dibuat')->dateTime('d M Y'),
+            TextColumn::make('created_at')->label('Created')->dateTime('d M Y'),
         ]);
     }
 
