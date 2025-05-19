@@ -7,10 +7,13 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\KategoriSurveyController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\MataKuliahDosenController;
 use App\Http\Controllers\BobotNilaiController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SurveyQuestionController;
+use App\Http\Controllers\ResponseController;
+use App\Http\Controllers\PenilaianDosenController;
 
 // USER CRUD (AUTH-USER)
 Route::post('/users', [UserController::class, 'store']);
@@ -62,9 +65,14 @@ Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiIns
 // PUT/PATCH	/api/mata-kuliahs/{id}	update($request, $id)	UPDATE berdasarkan ID
 // DELETE	    /api/mata-kuliahs/{id}	destroy($id)	        DELETE berdasarkan ID
 
+
+// API ROUTE MATA KULIAH DOSEN
+Route::apiResource('mata-kuliah-dosens', MataKuliahDosenController::class);
+Route::post('mata-kuliah-dosens/multi-insert', [MataKuliahDosenController::class, 'multiInsert']);
+
+
 // BOBOT NILAI CRUD ROUTES
 Route::apiResource('bobot-nilais', BobotNilaiController::class);
-
 // GET         /api/bobot-nilais           -> index()
 // POST        /api/bobot-nilais           -> store()
 // GET         /api/bobot-nilais/{id}      -> show()
@@ -78,5 +86,24 @@ Route::get('/survey-questions/{survey_id}', [SurveyQuestionController::class, 'i
 Route::post('/survey-questions', [SurveyQuestionController::class, 'store']);
 Route::put('/survey-questions/{id}', [SurveyQuestionController::class, 'update']);
 Route::delete('/survey-questions/{id}', [SurveyQuestionController::class, 'destroy']);
+
+// RESPONSES CRUD ROUTES (CONNECT WITH SURVEY_QUESTIONS AND USERS)
+Route::prefix('responses')->group(function () {
+    Route::get('/', [ResponseController::class, 'index']);
+    Route::post('/', [ResponseController::class, 'store']);
+    Route::get('/{id}', [ResponseController::class, 'show']);
+    Route::put('/{id}', [ResponseController::class, 'update']);
+    Route::delete('/{id}', [ResponseController::class, 'destroy']);
+});
+
+// PENILAIAN DOSEN FEATURE
+
+Route::prefix('penilaian-dosen')->group(function () {
+    Route::get('/', [PenilaianDosenController::class, 'index']);
+    Route::post('/', [PenilaianDosenController::class, 'store']);
+    Route::get('/{id}', [PenilaianDosenController::class, 'show']);
+    Route::put('/{id}', [PenilaianDosenController::class, 'update']);
+    Route::delete('/{id}', [PenilaianDosenController::class, 'destroy']);
+});
 
 
