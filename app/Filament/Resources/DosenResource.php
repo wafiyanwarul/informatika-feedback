@@ -44,7 +44,7 @@ class DosenResource extends Resource
             ->columns([
                 TextColumn::make('no')
                     ->label('No.')
-                    ->state(fn($record, $rowLoop) => $rowLoop->iteration),
+                    ->rowIndex(),
                 ImageColumn::make('foto_profil')
                     ->label('Avatar')
                     ->circular()
@@ -61,9 +61,7 @@ class DosenResource extends Resource
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
