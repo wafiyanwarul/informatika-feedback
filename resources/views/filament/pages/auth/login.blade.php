@@ -36,28 +36,30 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <script>
-        function onTurnstileSuccess(token) {
-            console.log('Turnstile success:', token);
-        }
-
-        function onTurnstileError(error) {
-            console.error('Turnstile error:', error);
-        }
-
-        function onTurnstileExpired() {
-            console.log('Turnstile expired');
-            if (window.turnstile) {
-                window.turnstile.reset();
+        (function() {
+            function onTurnstileSuccess(token) {
+                console.log('Turnstile success:', token);
             }
-        }
 
-        // Reset on validation errors
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('reset-turnstile', () => {
+            function onTurnstileError(error) {
+                console.error('Turnstile error:', error);
+            }
+
+            function onTurnstileExpired() {
+                console.log('Turnstile expired');
                 if (window.turnstile) {
-                    setTimeout(() => window.turnstile.reset(), 100);
+                    window.turnstile.reset();
                 }
+            }
+
+            // Reset on validation errors
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('reset-turnstile', () => {
+                    if (window.turnstile) {
+                        setTimeout(() => window.turnstile.reset(), 100);
+                    }
+                });
             });
-        });
+        })();
     </script>
 </x-filament-panels::page.simple>
