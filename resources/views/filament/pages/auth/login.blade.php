@@ -51,6 +51,7 @@
                     window.turnstile.reset();
                 }
             }
+            
             // Reset on validation errors
             document.addEventListener('livewire:init', () => {
                 Livewire.on('reset-turnstile', () => {
