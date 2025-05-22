@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -38,6 +39,10 @@ class RoleResource extends Resource
     {
         return $table->columns([
             TextColumn::make('id')->sortable(),
+            ImageColumn::make('foto_profil')
+                ->label('Avatar')
+                ->circular()
+                ->getStateUsing(fn($record) => $record->foto_profil ?: 'https://api.dicebear.com/7.x/pixel-art/svg?seed=' . urlencode($record->nama_role)),
             TextColumn::make('nama_role')->label('Nama Role')->searchable(),
             TextColumn::make('created_at')->label('Created')->dateTime('d M Y'),
         ]);
