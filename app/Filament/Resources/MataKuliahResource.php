@@ -56,7 +56,6 @@ class MataKuliahResource extends Resource
                 ->label('Nama Mata Kuliah')
                 ->sortable()
                 ->searchable(),
-
             TextColumn::make('sks')
                 ->label('SKS')
                 ->sortable(),
