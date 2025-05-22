@@ -44,26 +44,24 @@ class MataKuliahResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('no')
-                    ->label('No.')
-                    ->rowIndex(),
-                ImageColumn::make('foto_profil')
-                    ->label('Avatar')
-                    ->circular()
-                    ->getStateUsing(fn($record) => $record->foto_profil ?: 'https://api.dicebear.com/7.x/rings/svg?seed=' . urlencode($record->nama_mk)),
-                TextColumn::make('nama_mk')
-                    ->label('Nama Mata Kuliah')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('sks')
-                    ->label('SKS')
-                    ->sortable(),
-            ])
+        return $table->columns([
+            TextColumn::make('no')
+                ->label('No.')
+                ->rowIndex(),
+            ImageColumn::make('foto_profil')
+                ->label('Avatar')
+                ->circular()
+                ->getStateUsing(fn($record) => $record->foto_profil ?: 'https://api.dicebear.com/7.x/rings/svg?seed=' . urlencode($record->nama_mk)),
+            TextColumn::make('nama_mk')
+                ->label('Nama Mata Kuliah')
+                ->sortable()
+                ->searchable(),
+            TextColumn::make('sks')
+                ->label('SKS')
+                ->sortable(),
+            TextColumn::make('created_at')->label('Created'),
+        ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -54,9 +54,7 @@ class UserResource extends Resource
         return $table->columns([
             TextColumn::make('no')
                 ->label('No.')
-                ->state(function ($record, $rowLoop) {
-                    return $rowLoop->iteration;
-                }),
+                ->rowIndex(),
             ImageColumn::make('foto_profil')
                 ->label('Avatar')
                 ->circular()
@@ -67,10 +65,16 @@ class UserResource extends Resource
                 'primary' => 'admin',
                 'success' => 'mahasiswa',
                 'info' => 'dosen',
-                'warning' => 'eksternal',
+                'danger' => 'eksternal',
             ]),
-            TextColumn::make('created_at')->label('Dibuat')->dateTime('d M Y'),
-        ]);
+            TextColumn::make('created_at')->label('Created')->dateTime('d M Y'),
+        ])
+            ->actions([
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]);
     }
 
     public static function getRelations(): array
