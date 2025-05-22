@@ -67,10 +67,9 @@ class UserResource extends Resource
                 'info' => 'dosen',
                 'danger' => 'eksternal',
             ]),
-            TextColumn::make('created_at')->label('Dibuat')->dateTime('d M Y'),
+            TextColumn::make('created_at')->label('Created')->dateTime('d M Y'),
         ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

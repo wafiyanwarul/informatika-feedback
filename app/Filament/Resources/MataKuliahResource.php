@@ -59,9 +59,9 @@ class MataKuliahResource extends Resource
             TextColumn::make('sks')
                 ->label('SKS')
                 ->sortable(),
+            TextColumn::make('created_at')->label('Created'),
         ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

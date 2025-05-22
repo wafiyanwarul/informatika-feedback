@@ -55,7 +55,6 @@ class RoleResource extends Resource
             TextColumn::make('created_at')->label('Created')->dateTime('d M Y'),
         ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
