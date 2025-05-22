@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{TextInput, Select, DateTimePicker};
 use Filament\Tables\Columns\{TextColumn, BadgeColumn, ImageColumn};
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -36,7 +37,7 @@ class UserResource extends Resource
             TextInput::make('email')->email()->required()->unique(ignoreRecord: true),
             TextInput::make('password')
                 ->password()
-                ->dehydrateStateUsing(fn($state) => \Hash::make($state))
+                ->dehydrateStateUsing(fn($state) => Hash::make($state))
                 ->required(fn(string $context): bool => $context === 'create')
                 ->label('Password'),
             Select::make('role_id')
