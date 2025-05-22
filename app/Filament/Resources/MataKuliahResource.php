@@ -48,9 +48,7 @@ class MataKuliahResource extends Resource
             ->columns([
                 TextColumn::make('no')
                     ->label('No.')
-                    ->state(function ($record, $rowLoop) {
-                        return $rowLoop->iteration;
-                    }),
+                    ->rowIndex(),
                 ImageColumn::make('foto_profil')
                     ->label('Avatar')
                     ->circular()
