@@ -17,8 +17,13 @@ class Survey extends Model
         'kategori_id'
     ];
 
-    public function kategori()
+    public function kategoriSurvey()
     {
         return $this->belongsTo(KategoriSurvey::class, 'kategori_id');
+    }
+
+    public function questions()
+    {
+        return $this->hasMany(SurveyQuestion::class);
     }
 }

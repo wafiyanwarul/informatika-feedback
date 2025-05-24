@@ -48,10 +48,10 @@ class MataKuliahResource extends Resource
             TextColumn::make('no')
                 ->label('No.')
                 ->rowIndex(),
-            ImageColumn::make('foto_profil')
+            ImageColumn::make('avatar')
                 ->label('Avatar')
                 ->circular()
-                ->getStateUsing(fn($record) => $record->foto_profil ?: 'https://api.dicebear.com/7.x/rings/svg?seed=' . urlencode($record->nama_mk)),
+                ->getStateUsing(fn($record) => $record->avatar ?: 'https://api.dicebear.com/7.x/rings/svg?seed=' . urlencode($record->nama_mk)),
             TextColumn::make('nama_mk')
                 ->label('Nama Mata Kuliah')
                 ->sortable()
