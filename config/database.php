@@ -61,7 +61,7 @@ return [
             ]) : [],
             'pool' => [
                 'min_connections' => 1,
-                'max_connections' => 3,
+                'max_connections' => 4,
             ],
         ],
 
