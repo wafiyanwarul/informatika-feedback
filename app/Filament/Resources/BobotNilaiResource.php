@@ -108,7 +108,6 @@ class BobotNilaiResource extends Resource
                     ])
                     ->multiple(),
             ])
-            ->filters([])
             ->actions([
                 Tables\Actions\DeleteAction::make(),
             ])
