@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Filament\Resources\RoleResource\Pages;
+namespace App\Filament\Resources\BobotNilaiResource\Pages;
 
-use App\Filament\Resources\RoleResource;
+use App\Filament\Resources\BobotNilaiResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
-class EditRole extends EditRecord
+class EditBobotNilai extends EditRecord
 {
-    protected static string $resource = RoleResource::class;
+    protected static string $resource = BobotNilaiResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Edit Bobot Nilai';
     }
 
     protected function getRedirectUrl(): string
@@ -27,7 +32,7 @@ class EditRole extends EditRecord
     {
         return Notification::make()
             ->success()
-            ->title('Role berhasil diperbarui!')
+            ->title('Bobot nilai berhasil diperbarui!')
             ->body('Perubahan data telah disimpan.');
     }
 }

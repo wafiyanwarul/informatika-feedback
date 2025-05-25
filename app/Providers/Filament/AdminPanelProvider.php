@@ -17,6 +17,9 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Pages\Auth\EditProfile;
+use App\Filament\Resources\CustomResource\Widgets\MainStatsOverview;
+use App\Filament\Pages\Auth\Login;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -26,7 +29,13 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+<<<<<<< HEAD
             ->login()
+=======
+            ->login(Login::class)
+            ->profile()
+            ->profile(EditProfile::class)
+>>>>>>> e8a06f774a3fc19d65883565e8726c0238ed16f8
             ->spa()
             ->unsavedChangesAlerts()
             ->colors([
@@ -41,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                MainStatsOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,

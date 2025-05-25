@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\RoleResource\Pages;
+namespace App\Filament\Resources\KategoriSurveyResource\Pages;
 
-use App\Filament\Resources\RoleResource;
+use App\Filament\Resources\KategoriSurveyResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
-class EditRole extends EditRecord
+class EditKategoriSurvey extends EditRecord
 {
-    protected static string $resource = RoleResource::class;
+    protected static string $resource = KategoriSurveyResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -27,7 +27,7 @@ class EditRole extends EditRecord
     {
         return Notification::make()
             ->success()
-            ->title('Role berhasil diperbarui!')
+            ->title('Kategori Survey berhasil diperbarui!')
             ->body('Perubahan data telah disimpan.');
     }
 }

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace App\Filament\Resources\DosenResource\Pages;
 
-use App\Filament\Resources\UserResource;
+use App\Filament\Resources\DosenResource;
+use App\Filament\Resources\DosenResource\Widgets\StatsOverview;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Resources\UserResource\Widgets\StatsOverview;
 
-class ListUsers extends ListRecords
+class ListDosens extends ListRecords
 {
-    protected static string $resource = UserResource::class;
+    protected static string $resource = DosenResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make()
-                ->label('Tambah Pengguna Baru')
+                ->label('Tambah Dosen Baru')
                 ->icon('heroicon-o-plus'),
         ];
     }
@@ -29,6 +29,6 @@ class ListUsers extends ListRecords
 
     public function getTitle(): string
     {
-        return 'Users Management';
+        return 'Lecturers Management';
     }
 }
