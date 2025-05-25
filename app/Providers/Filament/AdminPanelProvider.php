@@ -58,9 +58,14 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                'throttle:login,5,1',
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->loginRateLimiting(
+                attempts: 3,
+                decay: 60,
+            );
     }
 }
