@@ -62,10 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->loginRateLimiting(
-                attempts: 3,
-                decay: 60,
-            );
+            ]);
     }
 }
