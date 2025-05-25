@@ -13,7 +13,14 @@ class ListKategoriSurveys extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Kategori Survey')
+                ->icon('heroicon-o-plus'),
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Survey Categories Management';
     }
 }

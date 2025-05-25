@@ -13,7 +13,14 @@ class ListSurveys extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Survei Baru')
+                ->icon('heroicon-o-plus'),
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Surveys Management';
     }
 }

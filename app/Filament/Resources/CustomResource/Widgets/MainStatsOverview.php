@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Survey;
 use App\Models\KategoriSurvey;
 use App\Models\SurveyQuestion;
+use App\Models\BobotNilai;
 
 class MainStatsOverview extends BaseWidget
 {
@@ -25,6 +26,10 @@ class MainStatsOverview extends BaseWidget
             ? round($surveysWithQuestions->avg('questions_count'), 1)
             : 0;
 
+        $totalBobotNilai = BobotNilai::count();
+        $bobotNilaiTertinggi = BobotNilai::max('skor') ?? 0;
+        $bobotNilaiTerendah = BobotNilai::min('skor') ?? 0;
+        
         return [
             Stat::make('Total Dosen', Dosen::count())
                 ->description('Jumlah dosen aktif')
@@ -60,6 +65,11 @@ class MainStatsOverview extends BaseWidget
                 ->description('Kategori survey tersedia')
                 ->icon('heroicon-o-tag')
                 ->color('warning'),
+
+            Stat::make('Rating Weights', $totalBobotNilai)
+                ->description($totalBobotNilai > 0 ? "Range: {$bobotNilaiTerendah} - {$bobotNilaiTertinggi}" : 'Belum ada bobot nilai')
+                ->icon('heroicon-o-star')
+                ->color('purple'),
 
             Stat::make('Total Questions', $totalQuestions)
                 ->description("Rating: {$ratingQuestions} | Kritik & Saran: {$kritikSaranQuestions}")
