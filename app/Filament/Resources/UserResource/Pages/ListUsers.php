@@ -14,7 +14,9 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Pengguna Baru')
+                ->icon('heroicon-o-plus'),
         ];
     }
 
@@ -23,5 +25,10 @@ class ListUsers extends ListRecords
         return [
             StatsOverview::class,
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Users Management';
     }
 }

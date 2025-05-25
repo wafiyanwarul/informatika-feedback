@@ -13,7 +13,14 @@ class ListRoles extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Role Baru')
+                ->icon('heroicon-o-plus'),
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Roles Management';
     }
 }
