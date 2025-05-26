@@ -34,12 +34,6 @@ class AdminPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             ->spa()
             ->sidebarCollapsibleOnDesktop()
-            ->navigationGroups([
-                'Survey Management',
-                'User Management',
-                'System Settings',
-                'Reports & Analytics',
-            ])
             ->unsavedChangesAlerts()
             ->colors([
                 'primary' => Color::Blue,

@@ -26,13 +26,10 @@ class PenilaianDosenResource extends Resource
     protected static ?string $model = PenilaianDosen::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-
+    protected static ?string $navigationGroup = 'Manage Responses & Final Scores';
     protected static ?string $navigationLabel = 'Penilaian Dosen';
-
     protected static ?string $modelLabel = 'Penilaian Dosen';
-
     protected static ?string $pluralModelLabel = 'Penilaian Dosen';
-
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form

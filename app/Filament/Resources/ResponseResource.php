@@ -26,13 +26,10 @@ class ResponseResource extends Resource
     protected static ?string $model = Response::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
-
+    protected static ?string $navigationGroup = 'Manage Responses & Final Scores';
     protected static ?string $navigationLabel = 'Responses';
-
     protected static ?string $modelLabel = 'Response';
-
     protected static ?string $pluralModelLabel = 'Responses';
-
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
