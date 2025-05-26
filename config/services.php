@@ -36,4 +36,9 @@ return [
         'secret' => env('TURNSTILE_SECRET_KEY'),
     ],
 
+    'koyeb' => [
+        'token' => env('KOYEB_API_TOKEN'),
+        'service_id' => env('KOYEB_SERVICE_ID'),
+        'organization_id' => env('KOYEB_ORGANIZATION_ID'),
+    ],
 ];

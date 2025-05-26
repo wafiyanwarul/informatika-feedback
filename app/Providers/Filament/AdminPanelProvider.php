@@ -33,20 +33,34 @@ class AdminPanelProvider extends PanelProvider
             ->profile()
             ->profile(EditProfile::class)
             ->spa()
+            ->sidebarCollapsibleOnDesktop()
+            ->navigationGroups([
+                'Survey Management',
+                'User Management',
+                'System Settings',
+                'Reports & Analytics',
+            ])
             ->unsavedChangesAlerts()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
+                'gray' => Color::Slate,
             ])
+            ->defaultThemeMode(\Filament\Enums\ThemeMode::Dark)
+            ->brandName('Informatics Feedback System')
+            ->brandLogo(asset('images/logo-if-feedback.png'))
+            ->brandLogoHeight('2rem')
+            // Remove Filament branding
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\FilamentInfoWidget::class,
                 MainStatsOverview::class,
+                \App\Filament\Widgets\MaintenanceWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
