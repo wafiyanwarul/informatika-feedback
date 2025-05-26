@@ -20,6 +20,8 @@ Route::post('/users', [UserController::class, 'store']);
 
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']); // Read all users
+    Route::get('/email/{email}', [UserController::class, 'getByEmail']);
+    Route::get('/google-id/{google_id}', [UserController::class, 'getByGoogleId']);
     Route::get('/{id}', [UserController::class, 'show']); // Read one user
     Route::put('/{id}', [UserController::class, 'update']); // Update user name
     Route::delete('/{id}', [UserController::class, 'destroy']); // Delete user
@@ -91,6 +93,7 @@ Route::delete('/survey-questions/{id}', [SurveyQuestionController::class, 'destr
 Route::prefix('responses')->group(function () {
     Route::get('/', [ResponseController::class, 'index']);
     Route::post('/', [ResponseController::class, 'store']);
+    Route::post('/multi-insert', [ResponseController::class, 'multiInsert']);
     Route::get('/{id}', [ResponseController::class, 'show']);
     Route::put('/{id}', [ResponseController::class, 'update']);
     Route::delete('/{id}', [ResponseController::class, 'destroy']);
