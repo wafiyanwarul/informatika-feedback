@@ -13,6 +13,8 @@ class Response extends Model
         'user_id',
         'survey_id',
         'question_id',
+        'mk_id',
+        'dosen_id',
         'nilai',
         'kritik_saran',
     ];
@@ -30,5 +32,15 @@ class Response extends Model
     public function question()
     {
         return $this->belongsTo(SurveyQuestion::class, 'question_id');
+    }
+
+    public function mataKuliah()
+    {
+        return $this->belongsTo(MataKuliah::class, 'mk_id');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 }
