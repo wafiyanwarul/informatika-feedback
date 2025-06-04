@@ -34,6 +34,8 @@ class ResponseController extends Controller
             'user_id'      => 'required|exists:users,id',
             'survey_id'    => 'required|exists:surveys,id',
             'question_id'  => 'required|exists:survey_questions,id',
+            'mk_id'        => 'required|exists:mata_kuliahs,id',
+            'dosen_id'     => 'required|exists:dosens,id',
             'nilai'        => 'nullable|integer|min:1|max:4',
             'kritik_saran' => 'nullable|string'
         ]);
@@ -70,6 +72,8 @@ class ResponseController extends Controller
             'user_id'      => $request->user_id,
             'survey_id'    => $request->survey_id,
             'question_id'  => $request->question_id,
+            'mk_id'        => $request->mk_id,
+            'dosen_id'     => $request->dosen_id,
             'nilai'        => $question->tipe === 'rating' ? $request->nilai : null,
             'kritik_saran' => $question->tipe === 'kritik_saran' ? $request->kritik_saran : null
         ]);
@@ -101,6 +105,7 @@ class ResponseController extends Controller
                     'message' => 'Data responses harus berupa array dan tidak boleh kosong',
                 ], 400);
             }
+
             $validatedResponses = [];
             $errors = [];
 
@@ -110,6 +115,8 @@ class ResponseController extends Controller
                     'user_id'      => 'required|exists:users,id',
                     'survey_id'    => 'required|exists:surveys,id',
                     'question_id'  => 'required|exists:survey_questions,id',
+                    'mk_id'        => 'required|exists:mata_kuliahs,id',
+                    'dosen_id'     => 'required|exists:dosens,id',
                     'nilai'        => 'nullable|integer|min:1|max:4',
                     'kritik_saran' => 'nullable|string'
                 ]);
@@ -141,6 +148,8 @@ class ResponseController extends Controller
                         'user_id'      => $responseData['user_id'],
                         'survey_id'    => $responseData['survey_id'],
                         'question_id'  => $responseData['question_id'],
+                        'mk_id'        => $responseData['mk_id'],
+                        'dosen_id'     => $responseData['dosen_id'],
                         'nilai'        => $question->tipe === 'rating' ? $responseData['nilai'] : null,
                         'kritik_saran' => $question->tipe === 'kritik_saran' ? $responseData['kritik_saran'] : null,
                         'created_at'   => now(),

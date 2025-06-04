@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreatePenilaianDosen extends CreateRecord
 {
     protected static string $resource = PenilaianDosenResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

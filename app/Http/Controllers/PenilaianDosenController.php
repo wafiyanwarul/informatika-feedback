@@ -42,14 +42,32 @@ class PenilaianDosenController extends Controller
             // retrieve all response from mahasiswa for survey and question with 'rating' type
             $responses = Response::where('user_id', $request->mahasiswa_id)
                 ->where('survey_id', $request->survey_id)
+                ->where('dosen_id', $request->dosen_id)
+                ->where('mk_id', $request->mk_id)
                 ->whereHas('question', function ($query) {
                     $query->where('tipe', 'rating');
-                })->pluck('nilai');
+                })
+                ->whereNotNull('nilai')
+                ->pluck('nilai');
 
             if ($responses->count() == 0) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Tidak ditemukan data nilai untuk user ini pada survey tersebut'
+                    'message' => 'Tidak ditemukan data nilai untuk user ini pada survey tersebut dengan dosen dan mata kuliah yang dipilih'
+                ], 400);
+            }
+
+            // Check if penilaian already exists
+            $existingPenilaian = PenilaianDosen::where('mahasiswa_id', $request->mahasiswa_id)
+                ->where('dosen_id', $request->dosen_id)
+                ->where('mk_id', $request->mk_id)
+                ->where('survey_id', $request->survey_id)
+                ->first();
+
+            if ($existingPenilaian) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Penilaian untuk mahasiswa ini pada dosen dan mata kuliah tersebut sudah ada'
                 ], 400);
             }
 
@@ -66,7 +84,9 @@ class PenilaianDosenController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data penilaian dosen berhasil disimpan',
-                'data' => $penilaian
+                'data' => $penilaian,
+                'average_score' => $averageScore,
+                'total_responses_counted' => $responses->count()
             ], 201);
         } catch (\Throwable $e) {
             return response()->json([

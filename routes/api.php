@@ -100,7 +100,6 @@ Route::prefix('responses')->group(function () {
 });
 
 // PENILAIAN DOSEN FEATURE
-
 Route::prefix('penilaian-dosen')->group(function () {
     Route::get('/', [PenilaianDosenController::class, 'index']);
     Route::post('/', [PenilaianDosenController::class, 'store']);
