@@ -29,10 +29,6 @@ Route::prefix('users')->group(function () {
     Route::delete('/{id}', [UserController::class, 'destroy']); // Delete user
 });
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
 // ROLES CRUD ROUTES
 Route::get('roles/search/{nama}', [RoleController::class, 'search']); // search by name
 Route::apiResource('roles', RoleController::class);
@@ -51,23 +47,27 @@ Route::apiResource('kategori-surveys', KategoriSurveyController::class);
 // DELETE	    /api/kategori-surveys/{id}	destroy($id)	        DELETE berdasarkan ID
 
 // DOSEN CRUD ROUTES
-Route::apiResource('dosens', DosenController::class);
-Route::post('dosens/multi-insert', [DosenController::class, 'multiInsert']); // multi-insert data
-// GET	        /api/dosens	        index()                 READ semua data
-// POST	        /api/dosens 	    store()                 CREATE data baru
-// GET	        /api/dosens/{id}	show($id)	            READ berdasarkan ID
-// PUT/PATCH	/api/dosens/{id}	update($request, $id)	UPDATE berdasarkan ID
-// DELETE	    /api/dosens/{id}	destroy($id)	        DELETE berdasarkan ID
+Route::post('dosens/multi-insert', [DosenController::class, 'multiInsert']);
+
+// Manual CRUD Routes untuk Dosen
+Route::get('dosens', [DosenController::class, 'index']);
+Route::post('dosens', [DosenController::class, 'store']);
+Route::get('dosens/{id}', [DosenController::class, 'show']);
+Route::put('dosens/{id}', [DosenController::class, 'update']);
+Route::patch('dosens/{id}', [DosenController::class, 'update']);
+Route::delete('dosens/{id}', [DosenController::class, 'destroy']);
 
 // MATA KULIAH CRUD ROUTES
-Route::apiResource('mata-kuliahs', MataKuliahController::class);
+// Manual CRUD Routes untuk Mata Kuliah
+Route::get('mata-kuliahs', [MataKuliahController::class, 'index']);
+Route::post('mata-kuliahs', [MataKuliahController::class, 'store']);
+Route::get('mata-kuliahs/{id}', [MataKuliahController::class, 'show']);
+Route::put('mata-kuliahs/{id}', [MataKuliahController::class, 'update']);
+Route::patch('mata-kuliahs/{id}', [MataKuliahController::class, 'update']);
+Route::delete('mata-kuliahs/{id}', [MataKuliahController::class, 'destroy']);
+
 Route::get('mata-kuliahs/search/{nama_mk}', [MataKuliahController::class, 'searchByName']);
 Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiInsert']);
-// GET	        /api/mata-kuliahs	    index()                 READ semua data
-// POST	        /api/mata-kuliahs 	    store()                 CREATE data baru
-// GET	        /api/mata-kuliahs/{id}	show($id)	            READ berdasarkan ID
-// PUT/PATCH	/api/mata-kuliahs/{id}	update($request, $id)	UPDATE berdasarkan ID
-// DELETE	    /api/mata-kuliahs/{id}	destroy($id)	        DELETE berdasarkan ID
 
 // API ROUTE MATA KULIAH DOSEN
 Route::apiResource('mata-kuliah-dosens', MataKuliahDosenController::class);
