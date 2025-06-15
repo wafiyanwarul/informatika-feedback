@@ -84,4 +84,9 @@ class MataKuliahResource extends Resource
             'edit' => Pages\EditMataKuliah::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }

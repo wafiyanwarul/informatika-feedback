@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ResponseResource\Pages;
 
 use App\Filament\Resources\ResponseResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListResponses extends ListRecords
@@ -12,8 +11,11 @@ class ListResponses extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\CreateAction::make(),
-        ];
+        return [];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Survey Responses';
     }
 }

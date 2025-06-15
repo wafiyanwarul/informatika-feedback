@@ -14,6 +14,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SurveyQuestionController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\PenilaianDosenController;
+use App\Http\Controllers\FinalScoreController;
+use App\Models\FinalScore;
 
 // USER CRUD (AUTH-USER)
 Route::post('/users', [UserController::class, 'store']);
@@ -67,11 +69,9 @@ Route::post('mata-kuliahs/multi-insert', [MataKuliahController::class, 'multiIns
 // PUT/PATCH	/api/mata-kuliahs/{id}	update($request, $id)	UPDATE berdasarkan ID
 // DELETE	    /api/mata-kuliahs/{id}	destroy($id)	        DELETE berdasarkan ID
 
-
 // API ROUTE MATA KULIAH DOSEN
 Route::apiResource('mata-kuliah-dosens', MataKuliahDosenController::class);
 Route::post('mata-kuliah-dosens/multi-insert', [MataKuliahDosenController::class, 'multiInsert']);
-
 
 // BOBOT NILAI CRUD ROUTES
 Route::apiResource('bobot-nilais', BobotNilaiController::class);
@@ -108,4 +108,15 @@ Route::prefix('penilaian-dosen')->group(function () {
     Route::delete('/{id}', [PenilaianDosenController::class, 'destroy']);
 });
 
+// Final Scores API Routes
+Route::prefix('final-scores')->group(function () {
+    Route::get('/', [FinalScoreController::class, 'index']);
+    Route::post('/', [FinalScoreController::class, 'store']);
+    Route::get('/statistics', [FinalScoreController::class, 'statistics']);
+    Route::get('/search', [FinalScoreController::class, 'getByDosenAndMataKuliah']);
+    Route::post('/recalculate', [FinalScoreController::class, 'recalculateAll']);
+    Route::get('/{id}', [FinalScoreController::class, 'show']);
+    Route::put('/{id}', [FinalScoreController::class, 'update']);
+    Route::delete('/{id}', [FinalScoreController::class, 'destroy']);
+});
 
