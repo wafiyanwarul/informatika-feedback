@@ -55,10 +55,14 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'remember_token',
     ];
 
-    // Relationship ke tabel roles
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function responses()
+    {
+        return $this->hasMany(Response::class);
     }
 
     /**

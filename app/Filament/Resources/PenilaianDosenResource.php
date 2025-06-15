@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
+use Filament\Tables\Columns\TextColumn;
 
 class PenilaianDosenResource extends Resource
 {
@@ -31,9 +32,9 @@ class PenilaianDosenResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationGroup = 'Manage Responses & Final Scores';
-    protected static ?string $navigationLabel = 'Penilaian Dosen';
-    protected static ?string $modelLabel = 'Penilaian Dosen';
-    protected static ?string $pluralModelLabel = 'Penilaian Dosen';
+    protected static ?string $navigationLabel = 'Nilai Dosen per Mahasiswa';
+    protected static ?string $modelLabel = 'Nilai Dosen per Mahasiswa';
+    protected static ?string $pluralModelLabel = 'Nilai Dosen per Mahasiswa';
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -205,29 +206,28 @@ class PenilaianDosenResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('no')
+                ->label('No.')
+                ->rowIndex(),
                 Tables\Columns\TextColumn::make('mahasiswa.name')
                     ->label('Mahasiswa')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('dosen.nama_dosen')
                     ->label('Dosen')
                     ->limit(25)
                     ->searchable()
                     ->sortable()
                     ->wrap(),
-
                 Tables\Columns\TextColumn::make('mataKuliah.nama_mk')
                     ->label('Mata Kuliah')
                     ->searchable()
                     ->sortable()
                     ->wrap(),
-
                 Tables\Columns\TextColumn::make('mataKuliah.sks')
                     ->label('SKS')
                     ->alignCenter()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('survey.judul')
                     ->label('Survey')
                     ->searchable()
@@ -239,7 +239,6 @@ class PenilaianDosenResource extends Resource
                         }
                         return $state;
                     }),
-
                 Tables\Columns\TextColumn::make('nilai')
                     ->label('Nilai')
                     ->badge()
@@ -252,7 +251,6 @@ class PenilaianDosenResource extends Resource
                     ->formatStateUsing(fn($state) => number_format($state, 2) . '/4')
                     ->sortable(),
                     // ->summarize(Average::make()->label('Rata-rata')),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal Penilaian')
                     ->dateTime('d M Y H:i')
@@ -265,19 +263,16 @@ class PenilaianDosenResource extends Resource
                     ->relationship('dosen', 'nama_dosen')
                     ->searchable()
                     ->preload(),
-
                 SelectFilter::make('mk_id')
                     ->label('Mata Kuliah')
                     ->relationship('mataKuliah', 'nama_mk')
                     ->searchable()
                     ->preload(),
-
                 SelectFilter::make('survey_id')
                     ->label('Survey')
                     ->relationship('survey', 'judul')
                     ->searchable()
                     ->preload(),
-
                 Tables\Filters\Filter::make('nilai_range')
                     ->form([
                         Forms\Components\Grid::make(2)

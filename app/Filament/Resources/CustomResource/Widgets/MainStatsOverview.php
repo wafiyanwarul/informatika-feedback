@@ -29,7 +29,7 @@ class MainStatsOverview extends BaseWidget
         $totalBobotNilai = BobotNilai::count();
         $bobotNilaiTertinggi = BobotNilai::max('skor') ?? 0;
         $bobotNilaiTerendah = BobotNilai::min('skor') ?? 0;
-        
+
         return [
             Stat::make('Total Dosen', Dosen::count())
                 ->description('Jumlah dosen aktif')
@@ -81,5 +81,10 @@ class MainStatsOverview extends BaseWidget
                 ->icon('heroicon-o-calculator')
                 ->color('gray'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return 'Utama'; // You can customize this text as needed
     }
 }
