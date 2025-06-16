@@ -6,27 +6,50 @@ use App\Filament\Resources\ResponseResource;
 use App\Models\Survey;
 use App\Models\User;
 use App\Models\Response;
+use Filament\Actions;
 use Filament\Resources\Pages\Page;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Notifications\Notification;
+use Filament\Tables\Columns\TextColumn;
 
 class ListUserResponses extends Page implements HasTable
 {
     use InteractsWithTable;
 
     protected static string $resource = ResponseResource::class;
+
     protected static string $view = 'filament.resources.response-resource.pages.list-user-responses';
 
     public Survey $survey;
     public User $user;
 
-    public function mount(int|string $survey, int|string $user): void
+    public function mount(Survey $survey, User $user): void
     {
-        $this->survey = Survey::findOrFail($survey);
-        $this->user = User::findOrFail($user);
+        $this->survey = $survey;
+        $this->user = $user;
+    }
+
+    public function getTitle(): string
+    {
+        return "Responses by {$this->user->name}";
+    }
+
+    public function getHeading(): string
+    {
+        return "Responses by {$this->user->name}";
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [
+            ResponseResource::getUrl() => 'Survey Responses',
+            ResponseResource::getUrl('respondents', ['survey' => $this->survey->id]) => $this->survey->judul,
+            '' => $this->user->name,
+        ];
     }
 
     public function table(Table $table): Table
@@ -39,90 +62,129 @@ class ListUserResponses extends Page implements HasTable
                     ->with(['question', 'mataKuliah', 'dosen'])
             )
             ->columns([
+                TextColumn::make('no')
+                    ->label('No.')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('question.pertanyaan')
-                    ->label('Pertanyaan')
-                    ->wrap()
-                    ->limit(50),
+                    ->label('Question')
+                    ->limit(50)
+                    ->tooltip(function ($record) {
+                        return $record->question->pertanyaan;
+                    })
+                    ->wrap(),
 
                 Tables\Columns\TextColumn::make('question.tipe')
-                    ->label('Tipe')
+                    ->label('Question Type')
                     ->badge()
-                    ->color(fn($state) => match ($state) {
-                        'rating' => 'success',
-                        'kritik_saran' => 'info',
-                        default => 'gray'
+                    ->color(function ($state) {
+                        return match($state) {
+                            'rating' => 'success',
+                            'text' => 'info',
+                            'multiple_choice' => 'warning',
+                            default => 'gray',
+                        };
                     }),
 
-                Tables\Columns\TextColumn::make('mataKuliah.nama')
-                    ->label('Mata Kuliah')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('mataKuliah.nama_mk')
+                    ->label('Subject')
+                    ->searchable()
+                    ->toggleable(),
 
-                Tables\Columns\TextColumn::make('dosen.nama')
-                    ->label('Dosen')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('dosen.nama_dosen')
+                    ->label('Lecturer')
+                    ->searchable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('nilai')
-                    ->label('Nilai')
+                    ->label('Rating/Value')
                     ->badge()
-                    ->color('success')
-                    ->formatStateUsing(fn($state) => $state ? $state . '/4' : '-')
-                    ->alignCenter(),
-
-                Tables\Columns\TextColumn::make('kritik_saran')
-                    ->label('Kritik & Saran')
-                    ->limit(30)
-                    ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
-                        $state = $column->getState();
-                        if (!$state || strlen($state) <= 30) {
-                            return null;
+                    ->color(function ($state, $record) {
+                        if ($record->question->tipe === 'rating') {
+                            return match(true) {
+                                $state >= 4 => 'success',
+                                $state >= 3 => 'warning',
+                                default => 'danger',
+                            };
+                        }
+                        return 'gray';
+                    })
+                    ->formatStateUsing(function ($state, $record) {
+                        if ($record->question->tipe === 'rating') {
+                            return $state . '/4';
                         }
                         return $state;
                     }),
 
+                Tables\Columns\TextColumn::make('kritik_saran')
+                    ->label('Comments/Feedback')
+                    ->limit(30)
+                    ->tooltip(function ($record) {
+                        return $record->kritik_saran;
+                    })
+                    ->toggleable()
+                    ->wrap(),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Waktu Jawab')
-                    ->dateTime('d M Y H:i')
-                    ->sortable(),
+                    ->label('Submitted At')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('question.tipe')
+                    ->label('Question Type')
+                    ->options([
+                        'rating' => 'Rating',
+                        'text' => 'Text',
+                        'multiple_choice' => 'Multiple Choice',
+                    ]),
+
+                Tables\Filters\SelectFilter::make('mk_id')
+                    ->label('Subject')
+                    ->relationship('mataKuliah', 'nama_mk'),
+
+                Tables\Filters\SelectFilter::make('dosen_id')
+                    ->label('Lecturer')
+                    ->relationship('dosen', 'nama_dosen'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->url(fn($record) => ResponseResource::getUrl('view', [
-                        'survey' => $this->survey->id,
-                        'user' => $this->user->id,
-                        'response' => $record->id
-                    ])),
-                Tables\Actions\EditAction::make()
-                    ->url(fn($record) => ResponseResource::getUrl('edit', [
-                        'survey' => $this->survey->id,
-                        'user' => $this->user->id,
-                        'response' => $record->id
-                    ])),
-
-                Tables\Actions\DeleteAction::make()
-                    ->modalHeading('Hapus Response')
-                    ->modalDescription('Apakah Anda yakin ingin menghapus response ini?')
-                    ->modalSubmitActionLabel('Hapus')
-                    ->successNotificationTitle('Response berhasil dihapus'),
+                    ->modalHeading(fn ($record) => 'Response Details')
+                    ->modalContent(function ($record) {
+                        return view('filament.resources.response-resource.view-response-modal', [
+                            'record' => $record,
+                        ]);
+                    }),
             ])
-            ->defaultSort('created_at');
-    }
-
-    public function getTitle(): string
-    {
-        return 'Jawaban - ' . $this->user->name;
+            ->defaultSort('created_at', 'desc')
+            ->poll('30s'); // Auto refresh every 30 seconds
     }
 
     protected function getHeaderActions(): array
     {
-        return [];
+        return [
+            Actions\Action::make('back_to_respondents')
+                ->label('Back to Respondents')
+                ->icon('heroicon-o-arrow-left')
+                ->url(ResponseResource::getUrl('respondents', ['survey' => $this->survey->id])),
+
+            Actions\Action::make('export_responses')
+                ->label('Export Responses')
+                ->icon('heroicon-o-document-arrow-down')
+                ->action(function () {
+                    // Implement export functionality here
+                    Notification::make()
+                        ->title('Export functionality will be implemented')
+                        ->success()
+                        ->send();
+                }),
+        ];
     }
 
-    public function getBreadcrumbs(): array
+    protected function getHeaderWidgets(): array
     {
         return [
-            ResponseResource::getUrl('index') => 'Survey Responses',
-            ResponseResource::getUrl('respondents', ['survey' => $this->survey->id]) => $this->survey->judul,
-            '' => $this->user->name,
+            // Add user response statistics widget here if needed
         ];
     }
 }
